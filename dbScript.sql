@@ -7,23 +7,23 @@ CREATE TABLE IF NOT EXISTS public.movies
 (
     id bigserial NOT NULL,
     title character(100) NOT NULL,
-    releaseDate date NOT NULL,
+    "releaseDate" date NOT NULL,
     description character(400) NOT NULL,
     genre character(20) NOT NULL,
     runtime character(100),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public."crewMember"
+CREATE TABLE IF NOT EXISTS public.crew_member
 (
     id bigserial NOT NULL,
     name character(20) NOT NULL,
-    jobTitle character(20) NOT NULL,
+    "jobTitle" character(20) NOT NULL,
     picture character(100),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.movies_crew
+CREATE TABLE IF NOT EXISTS public.movies_crew_member
 (
     movies_id bigserial NOT NULL,
     crew_id bigserial NOT NULL
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS public.users
     PRIMARY KEY (id)
 );
 
-ALTER TABLE IF EXISTS public.movies_crew
+ALTER TABLE IF EXISTS public.movies_crew_member
     ADD FOREIGN KEY (movies_id)
     REFERENCES public.movies (id) MATCH SIMPLE
     ON UPDATE NO ACTION
@@ -58,9 +58,9 @@ ALTER TABLE IF EXISTS public.movies_crew
     NOT VALID;
 
 
-ALTER TABLE IF EXISTS public.movies_crew
+ALTER TABLE IF EXISTS public.movies_crew_member
     ADD FOREIGN KEY (crew_id)
-    REFERENCES public."crewMember" (id) MATCH SIMPLE
+    REFERENCES public.crew_member (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
