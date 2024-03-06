@@ -1,4 +1,3 @@
-import passwordUtils from '../utils/passwordUtils.js';
 import userService from '../services/userService.js';
 
 async function createUser(req, res){
@@ -9,12 +8,11 @@ async function createUser(req, res){
             throw new Error('Please, send all the required data');
         }
 
-        const hashedPassword = passwordUtils.confirmPassword(password, password_confirmation);
-
         const newUser = {
             name: name,
             login: login,
-            password: hashedPassword
+            password: password,
+            password_confirmation: password_confirmation
         }
 
         // await keyword is needed, once postUser uses a async function under the hood
