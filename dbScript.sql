@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.movies
 (
     id bigserial NOT NULL,
     title character(100) NOT NULL,
-    "releaseDate" date NOT NULL,
+    release_date date NOT NULL,
     description character(400) NOT NULL,
     genre character(20) NOT NULL,
     runtime character(100),
@@ -18,15 +18,17 @@ CREATE TABLE IF NOT EXISTS public.crew_member
 (
     id bigserial NOT NULL,
     name character(20) NOT NULL,
-    "jobTitle" character(20) NOT NULL,
+    job_title character(20) NOT NULL,
     picture character(100),
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public.movies_crew_member
 (
+    id bigserial NOT NULL,
     movies_id bigserial NOT NULL,
-    crew_id bigserial NOT NULL
+    crew_id bigserial NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public.rating
@@ -45,8 +47,8 @@ CREATE TABLE IF NOT EXISTS public.users
     id bigserial NOT NULL,
     name character(30) NOT NULL,
     login character(15) NOT NULL,
-    password character(20) NOT NULL,
-    "isAdmin" boolean NOT NULL,
+    password character(75) NOT NULL,
+    is_admin boolean NOT NULL,
     PRIMARY KEY (id)
 );
 
