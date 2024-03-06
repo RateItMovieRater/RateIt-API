@@ -5,51 +5,46 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS public.movies
 (
-    id bigserial NOT NULL,
-    title character(100) NOT NULL,
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL UNIQUE,
     release_date date NOT NULL,
-    description character(400) NOT NULL,
-    genre character(20) NOT NULL,
-    runtime character(100),
-    PRIMARY KEY (id)
+    description VARCHAR(400) NOT NULL UNIQUE,
+    genre VARCHAR(20) NOT NULL,
+    runtime VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS public.crew_member
 (
-    id bigserial NOT NULL,
-    name character(20) NOT NULL,
-    job_title character(20) NOT NULL,
-    picture character(100),
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL UNIQUE,
+    job_title VARCHAR(20) NOT NULL,
+    picture VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS public.movies_crew_member
 (
-    id bigserial NOT NULL,
+    id SERIAL PRIMARY KEY,
     movies_id bigserial NOT NULL,
-    crew_id bigserial NOT NULL,
-    PRIMARY KEY (id)
+    crew_id bigserial NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.rating
 (
-    id bigserial NOT NULL,
-    rate integer NOT NULL,
-    title character(30),
-    comment character(200),
-    user_id integer NOT NULL,
-    movie_id integer NOT NULL,
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    rate INTEGER NOT NULL,
+    title VARCHAR(30),
+    comment VARCHAR(200),
+    user_id INTEGER NOT NULL,
+    movie_id INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.users
 (
-    id bigserial NOT NULL,
-    name character(30) NOT NULL,
-    login character(15) NOT NULL,
-    password character(75) NOT NULL,
-    is_admin boolean NOT NULL,
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE,
+    login VARCHAR(15) NOT NULL UNIQUE,
+    password VARCHAR(75) NOT NULL,
+    is_admin boolean NOT NULL
 );
 
 ALTER TABLE IF EXISTS public.movies_crew_member
