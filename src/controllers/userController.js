@@ -9,7 +9,7 @@ async function createUser(req, res){
             throw new Error('Please, send all the required data');
         }
 
-        const hashedPassword = await passwordUtils.confirmPassword(password, password_confirmation);
+        const hashedPassword = passwordUtils.confirmPassword(password, password_confirmation);
 
         const newUser = {
             name: name,
@@ -17,6 +17,7 @@ async function createUser(req, res){
             password: hashedPassword
         }
 
+        // await keyword is needed, once postUser uses a async function under the hood
         const createdUser = await userService.postUser(newUser);
 
         res.status(201).send({
