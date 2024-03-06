@@ -2,12 +2,12 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 const app = express();
-import userRouter from './routes/userRoutes.js';
+import routes from './routes/routes.js';
 
 // Middlewere
 app.use(cors());
 app.use(express.json());
-app.use('/api/user/', userRouter);
+app.use('/api', routes);
 
 // API health check function
 app.get('/api/health', (req, res) => {

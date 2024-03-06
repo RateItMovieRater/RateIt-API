@@ -1,9 +1,9 @@
-import userService from '../services/userService.js';
+import userServices from '../services/userServices.js';
 
-async function createUser(req, res){
+async function postUser(req, res){
+    const { name, login, password, password_confirmation } = req.body;
+
     try {
-        const { name, login, password, password_confirmation } = req.body;
-
         if(!name || !login || !password || !password_confirmation){
             throw new Error('Please, send all the required data');
         }
@@ -16,7 +16,7 @@ async function createUser(req, res){
         }
 
         // await keyword is needed, once postUser uses a async function under the hood
-        const createdUser = await userService.postUser(newUser);
+        const createdUser = await userServices.createUser(newUser);
 
         res.status(201).send({
             sucess: true,
@@ -24,10 +24,13 @@ async function createUser(req, res){
             message: 'Account created sucessfully.'
         });
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).send({
+            success:  false,
+            message: error.message
+        });
     }
 }
 
 export default {
-    createUser
+    postUser
 }
