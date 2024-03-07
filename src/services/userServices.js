@@ -18,7 +18,7 @@ async function logUser(user){
     const findedUser = dbQuery.rows[0];
 
     if(!findedUser){
-        throw new Error('user not found');
+        throw new Error('User not found.');
     }
 
     await passwordUtils.comparePasswords(user.password, findedUser.password);

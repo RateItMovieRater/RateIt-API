@@ -19,7 +19,7 @@ async function comparePasswords(userSentPasswords, dbStoredPassword){
     const validatedPassword = await bcryptjs.compare(userSentPasswords, dbStoredPassword);
 
     if(!validatedPassword){
-        throw new Error('Incorrect password');
+        throw new Error('Incorrect password.');
     }
 }
 

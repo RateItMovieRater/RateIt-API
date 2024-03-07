@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import userServices from '../services/userServices.js';
 
 async function postUser(req, res){
@@ -39,11 +40,26 @@ async function login(req, res){
             throw new Error('Please, send user login and password');
         }
 
+        if (req.signedCookies.sessionId) {
+            throw new Error('Already logged in');
+        }
+
         const user = { login, password };
 
         const returnedUser = await userServices.logUser(user);
 
-        res.send(returnedUser);
+        const sessionId = uuidv4();
+        req.session.sessionId = sessionId;
+        req.session.user = {
+            userId: returnedUser.id,
+            userName: returnedUser.name,
+        }
+
+        res.cookie('sessionId', sessionId, { signed: true, httpOnly: true });
+        res.status(200).send({
+            sucess: true,
+            message: 'User logged in successfully'
+        });
     } catch (error) {
         res.status(400).send({
             success:  false,

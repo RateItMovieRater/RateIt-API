@@ -8,10 +8,10 @@ import session from 'express-session';
 
 // Middlewere
 app.use(cors());
-app.use(cookieParser('my_cookie_secret'));
+app.use(cookieParser("secret"));
 app.use(
     session({
-      secret: "my_session_secret",
+      secret: "secret",
       resave: false,
       saveUninitialized: true,
       cookie: false
