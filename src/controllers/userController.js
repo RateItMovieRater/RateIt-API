@@ -31,6 +31,28 @@ async function postUser(req, res){
     }
 }
 
+async function login(req, res){
+    const { login, password } = req.body;
+
+    try {
+        if(!login || !password){
+            throw new Error('Please, send user login and password');
+        }
+
+        const user = { login, password };
+
+        const returnedUser = await userServices.logUser(user);
+
+        res.send(returnedUser);
+    } catch (error) {
+        res.status(400).send({
+            success:  false,
+            message: error.message
+        });
+    }
+}
+
 export default {
-    postUser
+    postUser,
+    login
 }

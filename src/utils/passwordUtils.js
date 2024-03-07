@@ -15,6 +15,15 @@ function hashPassword(password){
     return bcryptjs.hashSync(password, salt);
 }
 
+async function comparePasswords(userSentPasswords, dbStoredPassword){
+    const validatedPassword = await bcryptjs.compare(userSentPasswords, dbStoredPassword);
+
+    if(!validatedPassword){
+        throw new Error('Incorrect password');
+    }
+}
+
 export default {
-    confirmPassword
+    confirmPassword,
+    comparePasswords
 }

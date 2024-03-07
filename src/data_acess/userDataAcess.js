@@ -7,6 +7,13 @@ async function insertNewUser(user){
     return newUser;
 }
 
+async function findUserByLogin(userLogin){
+    let user = await pool.query('SELECT * FROM users WHERE name = $1;', [userLogin]);
+
+    return user;
+}
+
 export default {
-    insertNewUser
+    insertNewUser,
+    findUserByLogin
 }

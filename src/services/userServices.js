@@ -13,6 +13,20 @@ async function createUser(user){
     }
 }
 
+async function logUser(user){
+    const dbQuery = await userDataAcess.findUserByLogin(user.login);
+    const findedUser = dbQuery.rows[0];
+
+    if(!findedUser){
+        throw new Error('user not found');
+    }
+
+    await passwordUtils.comparePasswords(user.password, findedUser.password);
+
+    return findedUser;
+}
+
 export default {
-    createUser
+    createUser,
+    logUser
 }
