@@ -6,7 +6,7 @@ async function postUser(req, res){
 
     try {
         if(!name || !login || !password || !password_confirmation){
-            throw new Error('Please, send all the required data');
+            throw new Error('Please, send all the required data.');
         }
 
         const newUser = {
@@ -37,11 +37,11 @@ async function login(req, res){
 
     try {
         if(!login || !password){
-            throw new Error('Please, send user login and password');
+            throw new Error('Please, send user login and password.');
         }
 
         if (req.signedCookies.sessionId) {
-            throw new Error('Already logged in');
+            throw new Error('Already logged in.');
         }
 
         const user = { login, password };
@@ -58,7 +58,28 @@ async function login(req, res){
         res.cookie('sessionId', sessionId, { signed: true, httpOnly: true });
         res.status(200).send({
             sucess: true,
-            message: 'User logged in successfully'
+            message: 'User logged in successfully.'
+        });
+    } catch (error) {
+        res.status(400).send({
+            success:  false,
+            message: error.message
+        });
+    }
+}
+
+async function logout(req, res){
+    try {
+        if (!req.signedCookies.sessionId) {
+            throw new Error('No user logged in.');
+        }
+
+        req.session.destroy();
+
+        res.clearCookie('sessionId');
+        res.status(200).send({
+            success: true,
+            message: 'Logged out successfully.'
         });
     } catch (error) {
         res.status(400).send({
@@ -70,5 +91,6 @@ async function login(req, res){
 
 export default {
     postUser,
-    login
+    login,
+    logout
 }
