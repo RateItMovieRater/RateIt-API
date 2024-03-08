@@ -53,6 +53,7 @@ async function login(req, res){
         req.session.user = {
             userId: returnedUser.id,
             userName: returnedUser.name,
+            isAdmin: returnedUser.isAdmin
         }
 
         res.cookie('sessionId', sessionId, { signed: true, httpOnly: true });
