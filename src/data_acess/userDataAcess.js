@@ -13,7 +13,21 @@ async function findUserByLogin(userLogin){
     return user;
 }
 
+async function findUserById(userId){
+    let user = await pool.query('SELECT * FROM users WHERE id = $1;', [userId]);
+
+    return user;
+}
+
+async function deleteUserById(userId){
+    let dbQuery = await pool.query('DELETE FROM users WHERE id = $1;', [userId]);
+
+    return dbQuery;
+}
+
 export default {
     insertNewUser,
-    findUserByLogin
+    findUserByLogin,
+    findUserById,
+    deleteUserById
 }

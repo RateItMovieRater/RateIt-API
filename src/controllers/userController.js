@@ -51,11 +51,11 @@ async function login(req, res){
         const sessionId = uuidv4();
         req.session.sessionId = sessionId;
         req.session.user = {
-            userId: returnedUser.id,
-            userName: returnedUser.name,
-            isAdmin: returnedUser.isAdmin
+            id: returnedUser.id,
+            name: returnedUser.name,
+            isAdmin: returnedUser.is_admin
         }
-
+    
         res.cookie('sessionId', sessionId, { signed: true, httpOnly: true });
         res.status(200).send({
             sucess: true,
@@ -90,8 +90,27 @@ async function logout(req, res){
     }
 }
 
+async function deleteUser(req, res){
+    const userId = req.params.id;
+
+    try {
+        const deletedUser = await userServices.eradicateUser(userId, req.session.user);
+
+        res.status(200).send({
+            success: true,
+            message: 'User deleted successfully.'
+        })
+    } catch (error) {
+        res.status(400).send({
+            success:  false,
+            message: error.message
+        });
+    }
+}
+
 export default {
     postUser,
     login,
-    logout
+    logout,
+    deleteUser
 }

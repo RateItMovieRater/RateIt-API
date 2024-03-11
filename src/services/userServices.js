@@ -26,7 +26,26 @@ async function logUser(user){
     return findedUser;
 }
 
+async function eradicateUser(targetId, loggedUser){
+    const returnedUser =  await userDataAcess.findUserById(targetId);
+
+    if(!returnedUser.rows[0]){
+        throw new Error('User not found.');
+    }
+
+    if(loggedUser.isAdmin && loggedUser.id == targetId){
+        throw new Error('Cannot delete admin user');
+    }
+
+    if (loggedUser.isAdmin || loggedUser.id == targetId) {
+        await userDataAcess.deleteUserById(targetId);
+    } else {
+        throw new Error(`You don't have privilleges to perform this opperation.`);
+    }
+}
+
 export default {
     createUser,
-    logUser
+    logUser,
+    eradicateUser
 }
