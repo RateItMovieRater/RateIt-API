@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import userServices from '../services/userServices.js';
+import { handleError } from '../utils/errorUtils.js';
 
 async function postUser(req, res){
     const { name, login, password, password_confirmation } = req.body;
@@ -25,10 +26,7 @@ async function postUser(req, res){
             message: 'Account created sucessfully.'
         });
     } catch (error) {
-        res.status(400).send({
-            success:  false,
-            message: error.message
-        });
+        handleError(res, error);
     }
 }
 
@@ -55,17 +53,14 @@ async function login(req, res){
             name: returnedUser.name,
             isAdmin: returnedUser.is_admin
         }
-    
+
         res.cookie('sessionId', sessionId, { signed: true, httpOnly: true });
         res.status(200).send({
             sucess: true,
             message: 'User logged in successfully.'
         });
     } catch (error) {
-        res.status(400).send({
-            success:  false,
-            message: error.message
-        });
+        handleError(res, error);
     }
 }
 
@@ -83,10 +78,7 @@ async function logout(req, res){
             message: 'Logged out successfully.'
         });
     } catch (error) {
-        res.status(400).send({
-            success:  false,
-            message: error.message
-        });
+        handleError(res, error);
     }
 }
 
@@ -94,17 +86,14 @@ async function deleteUser(req, res){
     const userId = req.params.id;
 
     try {
-        const deletedUser = await userServices.eradicateUser(userId, req.session.user);
+        await userServices.eradicateUser(userId, req.session.user);
 
         res.status(200).send({
             success: true,
             message: 'User deleted successfully.'
         })
     } catch (error) {
-        res.status(400).send({
-            success:  false,
-            message: error.message
-        });
+        handleError(res, error);
     }
 }
 
