@@ -66,10 +66,6 @@ async function login(req, res){
 
 async function logout(req, res){
     try {
-        if (!req.signedCookies.sessionId) {
-            throw new Error('No user logged in.');
-        }
-
         req.session.destroy();
 
         res.clearCookie('sessionId');
