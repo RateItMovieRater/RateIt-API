@@ -7,11 +7,11 @@ async function fetchMovies(){
 }
 
 async function insertMovie(movie){
-    const { title, release_date, description, genre, rentime } = movie;
+    const { title, release_date, description, genre, runtime } = movie;
 
     let newMovie = await pool.query(
         'INSERT INTO movies (title, release_date, description, genre, runtime) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
-        [ title, release_date, description, genre, rentime ]
+        [ title, release_date, description, genre, runtime ]
     );
 
     return newMovie.rows[0];
