@@ -26,6 +26,12 @@ async function logUser(user){
     return findedUser;
 }
 
+async function getUserData(userId){
+    const userData = await userDataAcess.findUserById(userId);
+
+    return userData.rows[0];
+}
+
 async function eradicateUser(targetId, loggedUser){
     const returnedUser =  await userDataAcess.findUserById(targetId);
 
@@ -47,5 +53,6 @@ async function eradicateUser(targetId, loggedUser){
 export default {
     createUser,
     logUser,
+    getUserData,
     eradicateUser
 }

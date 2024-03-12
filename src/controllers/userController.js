@@ -38,10 +38,6 @@ async function login(req, res){
             throw new Error('Please, send user login and password.');
         }
 
-        if (req.signedCookies.sessionId) {
-            throw new Error('Already logged in.');
-        }
-
         const user = { login, password };
 
         const returnedUser = await userServices.logUser(user);
@@ -78,6 +74,20 @@ async function logout(req, res){
     }
 }
 
+async function getUser(req, res){
+    try {
+        const loggedUser = req.session.user;
+        const userData = await userServices.getUserData(loggedUser.id);
+
+        res.status(200).send({
+            success: true,
+            userData: userData
+        })
+    } catch (error) {
+        handleError(res, error);
+    }
+}
+
 async function deleteUser(req, res){
     const userId = req.params.id;
 
@@ -97,5 +107,6 @@ export default {
     postUser,
     login,
     logout,
+    getUser,
     deleteUser
 }
