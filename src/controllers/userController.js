@@ -74,7 +74,7 @@ async function logout(req, res){
     }
 }
 
-async function getUser(req, res){
+async function getLoggedUser(req, res){
     try {
         const loggedUser = req.session.user;
         const userData = await userServices.getUserData(loggedUser.id);
@@ -107,6 +107,6 @@ export default {
     postUser,
     login,
     logout,
-    getUser,
+    getLoggedUser,
     deleteUser
 }

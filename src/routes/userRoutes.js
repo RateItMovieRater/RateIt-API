@@ -3,7 +3,7 @@ import authentication from "../middlewere/auth.js";
 import { Router } from "express";
 const userRouter = Router();
 
-userRouter.get('/', authentication, userController.getUser);
+userRouter.get('/', authentication, userController.getLoggedUser);
 userRouter.post('/', userController.postUser);
 userRouter.post('/login', userController.login);
 userRouter.post('/logout', authentication, userController.logout);
