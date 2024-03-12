@@ -14,6 +14,27 @@ async function getMovies(req, res){
     }
 }
 
+async function postMovie(req, res){
+    const movieData = req.body;
+
+    try {
+        if (!movieData) {
+            throw new Error('Please provide movie data.');
+        }
+
+        const newMovie = await moviesServices.createMovie(movieData);
+
+        res.status(200).send({
+            success: true,
+            message: 'Movie posted successfully.',
+            movie: newMovie
+        });
+    } catch (error) {
+        handleError(res, error);
+    }
+}
+
 export default {
-    getMovies
+    getMovies,
+    postMovie
 }

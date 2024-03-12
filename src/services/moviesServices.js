@@ -6,6 +6,13 @@ async function getAllMovies(){
     return allMovies;
 }
 
+async function createMovie(movie){
+    let newMovie = await moviesDataAcess.insertMovie(movie);
+
+    return newMovie;
+}
+
 export default {
-    getAllMovies
+    getAllMovies,
+    createMovie
 }
