@@ -54,8 +54,28 @@ async function postMovie(req, res){
     }
 }
 
+async function deleteMovie(req, res){
+    let movieId =  req.params.id;
+
+    try {
+        if(!movieId){
+            throw new Error('Please, provide a movie id.');
+        }
+
+        await moviesServices.eradicateMovie(movieId);
+
+        res.status(200).send({
+            success: true,
+            message: 'Movie deleted successfully.',
+        })
+    } catch (error) {
+        handleError(res, error);
+    }
+}
+
 export default {
     getMovies,
     getSingleMovie,
-    postMovie
+    postMovie,
+    deleteMovie
 }

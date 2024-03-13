@@ -6,7 +6,7 @@ async function fetchMovies(){
     return movies.rows;
 }
 
-async function fetchSingleMovie(id){
+async function findMovieById(id){
     let movie = await pool.query('SELECT * FROM movies WHERE id = $1;', [id]);
 
     return movie.rows[0];
@@ -23,8 +23,15 @@ async function insertMovie(movie){
     return newMovie.rows[0];
 }
 
+async function deleteMovieById(id){
+    let dbQuery = await pool.query('DELETE FROM movies WHERE id = $1;', [id]);
+
+    return dbQuery;
+}
+
 export default {
     fetchMovies,
-    fetchSingleMovie,
-    insertMovie
+    findMovieById,
+    insertMovie,
+    deleteMovieById
 }

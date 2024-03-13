@@ -7,7 +7,7 @@ async function getAllMovies(){
 }
 
 async function getMovie(id){
-    let movie = await moviesDataAcess.fetchSingleMovie(id);
+    let movie = await moviesDataAcess.findMovieById(id);
 
     if (!movie) {
         throw new Error('There is no movie with this id.');
@@ -22,8 +22,19 @@ async function createMovie(movie){
     return newMovie;
 }
 
+async function eradicateMovie(id){
+    let movie = await moviesDataAcess.findMovieById(id);
+
+    if (!movie) {
+        throw new Error('There is no movie with this id.');
+    }
+
+    await moviesDataAcess.deleteMovieById(id);
+}
+
 export default {
     getAllMovies,
     getMovie,
-    createMovie
+    createMovie,
+    eradicateMovie
 }

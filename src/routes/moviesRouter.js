@@ -7,6 +7,6 @@ moviesRouter.get('/', moviesController.getMovies);
 moviesRouter.get('/:id', moviesController.getSingleMovie);
 moviesRouter.post('/', authenticate, authAdmin, moviesController.postMovie);
 // Edit movie
-// Delete movie
+moviesRouter.delete('/:id', authenticate, authAdmin, moviesController.deleteMovie);
 
 export default moviesRouter;
