@@ -14,6 +14,26 @@ async function getMovies(req, res){
     }
 }
 
+async function getSingleMovie(req, res){
+    let movieId =  req.params.id;
+
+    try {
+        if(!movieId){
+            throw new Error('Please, provide a movie id.');
+        }
+
+        let movie = await moviesServices.getMovie(movieId);
+
+        res.status(200).send({
+            success: true,
+            message: 'Movie retrieved successfully.',
+            movie: movie
+        })
+    } catch (error) {
+        handleError(res, error);
+    }
+}
+
 async function postMovie(req, res){
     const movieData = req.body;
 
@@ -36,5 +56,6 @@ async function postMovie(req, res){
 
 export default {
     getMovies,
+    getSingleMovie,
     postMovie
 }

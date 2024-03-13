@@ -6,6 +6,12 @@ async function fetchMovies(){
     return movies.rows;
 }
 
+async function fetchSingleMovie(id){
+    let movie = await pool.query('SELECT * FROM movies WHERE id = $1;', [id]);
+
+    return movie.rows[0];
+}
+
 async function insertMovie(movie){
     const { title, release_date, description, genre, runtime } = movie;
 
@@ -19,5 +25,6 @@ async function insertMovie(movie){
 
 export default {
     fetchMovies,
+    fetchSingleMovie,
     insertMovie
 }

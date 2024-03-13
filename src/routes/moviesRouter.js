@@ -4,6 +4,9 @@ import { Router } from "express";
 const moviesRouter = Router();
 
 moviesRouter.get('/', moviesController.getMovies);
+moviesRouter.get('/:id', moviesController.getSingleMovie);
 moviesRouter.post('/', authenticate, authAdmin, moviesController.postMovie);
+// Edit movie
+// Delete movie
 
 export default moviesRouter;
