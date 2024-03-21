@@ -6,7 +6,7 @@ const moviesRouter = Router();
 moviesRouter.get('/', moviesController.getMovies);
 moviesRouter.get('/:id', moviesController.getSingleMovie);
 moviesRouter.post('/', authenticate, authAdmin, moviesController.postMovie);
-// Edit movie
+moviesRouter.put('/:id', authenticate, authAdmin, moviesController.putMovie);
 moviesRouter.delete('/:id', authenticate, authAdmin, moviesController.deleteMovie);
 
 export default moviesRouter;

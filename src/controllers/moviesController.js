@@ -54,6 +54,13 @@ async function postMovie(req, res){
     }
 }
 
+async function putMovie(req, res){
+    let movieID = req.params.id;
+
+    
+
+}
+
 async function deleteMovie(req, res){
     let movieId =  req.params.id;
 
@@ -73,9 +80,12 @@ async function deleteMovie(req, res){
     }
 }
 
+
+
 export default {
     getMovies,
     getSingleMovie,
     postMovie,
+    putMovie,
     deleteMovie
 }
